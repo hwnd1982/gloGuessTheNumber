@@ -1,15 +1,13 @@
 'use strict';
 
 const
-// Границы загадываемых чисел
-  min = 1,
-  max = 100,      
-// Генератор псевдослучайного число в заданных границах
-  getRandomIntInclusive = function() {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  },
-  createTheGame = function(hiddenNumber, numberOfAttempts) {
+  createTheGame = function(min, max, numberOfAttempts) {
     let
+// Генератор псевдослучайного число в заданных границах
+      getRandomIntInclusive = function() {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      },
+      hiddenNumber = getRandomIntInclusive(),
 // Функция запроса ввода значений у пользователя
       enterTheNumber = function(lastTry) {
         let userResponse;
@@ -55,8 +53,8 @@ const
   };
 
 const 
-  startGame = function() {
-    let newGame = createTheGame(getRandomIntInclusive (), 10),
+  startGame = function(min, max, attempts) {
+    let newGame = createTheGame(min, max, attempts),
     gameOver = newGame();
     if (gameOver === undefined) {
       alert('Игра окончена');
@@ -64,11 +62,11 @@ const
       if (confirm( gameOver ? 
         'Поздравляю, Вы угадали!!! Хотели бы сыграть еще?':
         'Попытки закончились, хотите сыграть еще?')) {
-          startGame();
+          startGame(min, max, attempts);
       } else {
         alert('Благодарим за игру');
       }
     }
   };
 
-startGame();
+startGame(1, 100, 10);
