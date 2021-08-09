@@ -8,7 +8,7 @@ const
   getRandomIntInclusive = function() {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   },
-  launchTheGame = function(hiddenNumber, numberOfAttempts) {
+  createTheGame = function(hiddenNumber, numberOfAttempts) {
     let
 // Функция запроса ввода значений у пользователя
       enterTheNumber = function(lastTry) {
@@ -34,37 +34,41 @@ const
       },
 //  Функция хода в игре
       guessTheNumber = function(lastTry) {
-        let userNumber = enterTheNumber(lastTry),
-//  Диалог перезапуска игры
-        restartGame = function(userWon) {
-          if(confirm(userWon ? 
-            'Поздравляю, Вы угадали!!! Хотели бы сыграть еще?':
-            'Попытки закончились, хотите сыграть еще?')) {
-              hiddenNumber = getRandomIntInclusive();
-              numberOfAttempts = 10;
-              guessTheNumber();
-            } else {
-            alert('Благодарим за игру');
-          }
-        };
+        let userNumber = enterTheNumber(lastTry);
 
         if (userNumber) {
           if (hiddenNumber === +userNumber) {
-            restartGame(true);
+            return true;
           } else {
             if (numberOfAttempts === 1) {
-              restartGame(false);
+              return false;
             } else {
               numberOfAttempts--;
-              guessTheNumber(userNumber);
+              return guessTheNumber(userNumber);
             }
           }
         } else {
-          alert('Игра окончена');
+          return undefined;
         }
       };
     return guessTheNumber;
   };
 
-const newGame = launchTheGame(getRandomIntInclusive (), 10);
-newGame();
+const 
+  startGame = function() {
+    let newGame = createTheGame(getRandomIntInclusive (), 10),
+    gameOver = newGame();
+    if (gameOver === undefined) {
+      alert('Игра окончена');
+    } else {
+      if (confirm( gameOver ? 
+        'Поздравляю, Вы угадали!!! Хотели бы сыграть еще?':
+        'Попытки закончились, хотите сыграть еще?')) {
+          startGame();
+      } else {
+        alert('Благодарим за игру');
+      }
+    }
+  };
+
+startGame();
