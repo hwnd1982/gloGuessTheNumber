@@ -24,7 +24,7 @@ const
         switch (true) {
           case userResponse === null:
             return false;
-          case isNaN(userResponse) || (+userResponse < 1 || +userResponse > 100): 
+          case isNaN(userResponse) || (+userResponse < min || +userResponse > max): 
             return enterTheNumber(userResponse);
           default:
             return userResponse;
@@ -62,7 +62,7 @@ const
       if (confirm( gameOver ? 
         'Поздравляю, Вы угадали!!! Хотели бы сыграть еще?':
         'Попытки закончились, хотите сыграть еще?')) {
-          startGame(min, max, attempts);
+          startGame(min, max*(gameOver ? 2 : 1), attempts);
       } else {
         alert('Благодарим за игру');
       }
