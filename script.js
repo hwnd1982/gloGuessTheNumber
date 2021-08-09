@@ -1,21 +1,17 @@
 'use strict';
 
 const
-  launchTheGame = function() {
-    let
 // Границы загадываемых чисел
-      min = 1,
-      max = 100,
-// Количество попыток
-      numberOfAttempts = 10,
+  min = 1,
+  max = 100,      
 // Генератор псевдослучайного число в заданных границах
-      getRandomIntInclusive = function() {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-      },
-// Псевдослучайное число которое предстоит угадать
-      hiddenNumber = getRandomIntInclusive(),
+  getRandomIntInclusive = function() {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  },
+  launchTheGame = function(hiddenNumber, numberOfAttempts) {
+    let
 // Функция запроса ввода значений у пользователя
-      enterTheNumber = function(lastTry, attemptСounter) {
+      enterTheNumber = function(lastTry) {
         let userResponse;
         switch (true) {
           case lastTry === undefined:
@@ -70,5 +66,5 @@ const
     return guessTheNumber;
   };
 
-const newGame = launchTheGame();
+const newGame = launchTheGame(getRandomIntInclusive (), 10);
 newGame();
