@@ -23,11 +23,9 @@ const
           case isNaN(lastTry) || (+lastTry < min || +lastTry > max):
             userResponse = prompt(`Введи число! (от ${min} до ${max})`); break;
           case lastTry < hiddenNumber: 
-            userResponse = prompt(`Загаданное число больше, осталось попыток ${
-              attemptСounter ? numberOfAttempts - attemptСounter : numberOfAttempts}`); break;
+            userResponse = prompt(`Загаданное число больше, осталось попыток ${numberOfAttempts}`); break;
           case lastTry > hiddenNumber: 
-            userResponse = prompt(`Загаданное число меньше, осталось попыток ${
-              attemptСounter ? numberOfAttempts - attemptСounter : numberOfAttempts}`); break;
+            userResponse = prompt(`Загаданное число меньше, осталось попыток ${numberOfAttempts}`); break;
         }
         switch (true) {
           case userResponse === null:
@@ -39,14 +37,15 @@ const
         } 
       },
 //  Функция хода в игре
-      guessTheNumber = function(lastTry, attemptСounter) {
-        let userNumber = enterTheNumber(lastTry, attemptСounter),
+      guessTheNumber = function(lastTry) {
+        let userNumber = enterTheNumber(lastTry),
 //  Диалог перезапуска игры
         restartGame = function(userWon) {
           if(confirm(userWon ? 
             'Поздравляю, Вы угадали!!! Хотели бы сыграть еще?':
             'Попытки закончились, хотите сыграть еще?')) {
               hiddenNumber = getRandomIntInclusive();
+              numberOfAttempts = 10;
               guessTheNumber();
             } else {
             alert('Благодарим за игру');
@@ -57,10 +56,11 @@ const
           if (hiddenNumber === +userNumber) {
             restartGame(true);
           } else {
-            if (attemptСounter === numberOfAttempts - 1) {
+            if (numberOfAttempts === 1) {
               restartGame(false);
             } else {
-              guessTheNumber(userNumber, attemptСounter ? ++attemptСounter : 1);
+              numberOfAttempts--;
+              guessTheNumber(userNumber);
             }
           }
         } else {
