@@ -47,7 +47,8 @@ const
         alert('Игра окончена');
       }
     };
-    guessTheNumber();
+    return guessTheNumber;
   };
 
-launchTheGame();
+const newGame = launchTheGame();
+newGame();
