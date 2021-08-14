@@ -54,6 +54,11 @@ const
 
 const 
   startGame = function(min, max, attempts) {
+    
+    min = Math.min(min, max) || 1;
+    max = Math.max(min, max) || 100;
+    attempts = attempts || 10;
+
     let newGame = createTheGame(min, max, attempts),
     gameOver = newGame();
     if (gameOver === undefined) {
@@ -67,6 +72,4 @@ const
         alert('Благодарим за игру');
       }
     }
-  };
-
-startGame(1, 100, 10);
+  } ();
